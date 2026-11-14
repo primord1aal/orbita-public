@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
+  <meta name="description" content="Орбита — автономная демонстрация интерфейса службы такси.">
+  <title>Орбита — демонстрация</title>
+  <link rel="stylesheet" href="./assets/orbita-live-0.3.css">
+  <script defer src="./assets/orbita-live-0.3.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#demo-panel">К содержимому</a>
+  <div id="app" class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="orb-logo" aria-hidden="true">О</div>
+        <div><div class="brandname">ОРБИТА</div><div class="subbrand">ТАКСИ РЯДОМ</div></div>
+      </div>
+      <div class="headright"><span class="chip">Автономный просмотр</span><span class="pilltest">ДЕМО</span></div>
+    </header>
+    <p class="topnote">Это демонстрация интерфейса. Все точки и события условные. Реальные поездки здесь не создаются.</p>
+    <nav class="roles" role="tablist" aria-label="Примеры интерфейса">
+      <button id="tab-passenger" class="role-btn active" type="button" role="tab" aria-selected="true" aria-controls="demo-panel" data-view="passenger">Пассажир</button>
+      <button id="tab-driver" class="role-btn" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" data-view="driver" tabindex="-1">Водитель</button>
+      <button id="tab-dispatcher" class="role-btn" type="button" role="tab" aria-selected="false" aria-controls="demo-panel" data-view="dispatcher" tabindex="-1">Диспетчер</button>
+    </nav>
+    <main class="layout">
+      <section class="mapwrap demo-map-wrap" aria-label="Условная схема поездки">
+        <div class="map map-demo">
+          <svg class="demo-map" viewBox="0 0 620 560" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">Условная схема</title>
+            <desc id="map-desc">Точки А и Б на вымышленной схеме, не привязанной к реальной местности.</desc>
+            <path class="demo-road-thin" d="M0 110H620M0 255H620M0 445H620M85 0V560M300 0V560M535 0V560"/>
+            <path class="demo-road" d="M-20 340H185Q220 340 220 305V165Q220 130 255 130H650"/>
+            <path class="demo-road" d="M405-20V395Q405 420 430 420H650"/>
+            <path id="demo-route" class="demo-route" d="M145 340H185Q220 340 220 305V165Q220 130 255 130H405V210" hidden/>
+            <circle class="demo-point" cx="145" cy="340" r="21"/><text class="demo-point-label" x="145" y="346" text-anchor="middle">А</text>
+            <circle class="demo-point" cx="405" cy="210" r="21"/><text class="demo-point-label" x="405" y="216" text-anchor="middle">Б</text>
+            <text class="demo-caption" x="125" y="385">Точка А</text><text class="demo-caption" x="385" y="255">Точка Б</text>
+          </svg>
+          <div class="mapoverlay"><strong>Условная схема</strong><small>Вымышленный маршрут для знакомства с интерфейсом.</small></div>
+          <div class="mapfooter"><span class="maplegend"><span class="dot"></span> Только демонстрация</span></div>
+        </div>
+      </section>
+      <div class="rightside">
+        <section id="demo-panel" class="panel" role="tabpanel" aria-labelledby="tab-passenger" tabindex="0">
+          <h1 id="view-title">Куда едем?</h1>
+          <p id="view-subtitle" class="muted">Посмотрите пример выбора начальной и конечной точки.</p>
+          <div id="view-content" class="demo-content"></div>
+          <div class="demo-button-row">
+            <button id="demo-action" class="btn" type="button">Показать пример</button>
+            <button id="demo-reset" class="btn secondary" type="button">Сначала</button>
+          </div>
+          <p id="demo-status" class="muted demo-status" role="status" aria-live="polite">Выберите пример или посмотрите маршрут.</p>
+        </section>
+        <section class="panel" aria-labelledby="app-title">
+          <h2 id="app-title">Приложение «Орбита»</h2>
+          <p class="muted">Ссылка на установочный файл появится после подготовки и проверки новой версии.</p>
+        </section>
+      </div>
+    </main>
+    <footer class="footnote demo-footer">Демонстрация не запрашивает аккаунт, адрес, телефон или местоположение. Переключение примеров не предоставляет серверных прав.</footer>
+    <noscript><p class="notice">Показан пример пассажирского интерфейса. Для переключения примеров включите JavaScript.</p></noscript>
+  </div>
+  <template id="passenger-content"><div class="field"><div class="label">Откуда</div><div class="ordercard"><strong>Точка А</strong><p class="muted">Условная начальная точка</p></div></div><div class="field"><div class="label">Куда</div><div class="ordercard"><strong>Точка Б</strong><p class="muted">Условная конечная точка</p></div></div></template>
+  <template id="driver-content"><div class="ordercard"><strong>Пример предложения</strong><p class="muted">Точка А → Точка Б</p><span class="status yellow">Демонстрационная карточка</span></div><p class="footnote">Кнопка показывает только следующий экран примера.</p></template>
+  <template id="dispatcher-content"><div class="table"><div class="trow"><span>Пример поездки</span><span class="status">Точка А → Точка Б</span></div><div class="trow"><span>Условный автомобиль</span><span class="status green">Доступен в примере</span></div></div><p class="footnote">Данные не относятся к настоящим людям или поездкам.</p></template>
+</body>
+</html>
